@@ -21,10 +21,11 @@ app.UseRouting();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapDefaultControllerRoute();
 
     endpoints.MapAreaControllerRoute(name:"areaRoute",areaName:"Admin",pattern:"{Area}/{Controller=Category}/{Action=Index}/{id?}");
- 
+
+    endpoints.MapDefaultControllerRoute();
+
 });
 
 app.Run();
