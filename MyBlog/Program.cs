@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using MyBlogMVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseEndpoints(endpoints =>endpoints.MapDefaultControllerRoute());
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDefaultControllerRoute();
+
+    endpoints.MapAreaControllerRoute(name:"areaRoute",areaName:"Admin",pattern:"{Area}/{Controller=Category}/{Action=Index}/{id?}");
+ 
+});
 
 app.Run();
