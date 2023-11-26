@@ -7,14 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\_ViewImports.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-<<<<<<< HEAD
-=======
     <Folder Include="Models\" />
->>>>>>> 7e0c231c8cadf34e8380a91353e84945da6b7354
     <Folder Include="wwwroot\theme\NewFolder\" />
   </ItemGroup>
 
