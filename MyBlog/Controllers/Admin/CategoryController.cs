@@ -29,6 +29,7 @@ namespace MyBlogMVC.Controllers.Admin
         }
 
 
+
         public IActionResult CreateOrUpdate(int id, ViewType type)
         {
             ViewBag.Active = "Category";
@@ -96,6 +97,32 @@ namespace MyBlogMVC.Controllers.Admin
             definition = definition.Replace('ğ', 'g');
 
             return definition;
+        }
+
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var updatedCategory = this.context.Categories.AsNoTracking().SingleOrDefault(x => x.Id == id);
+
+            return View(updatedCategory);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Category category)
+        {
+            category.SeoUrl = category.Definition;
+
+            var updatedEntity = this.context.Categories.SingleOrDefault(x => x.Id == category.Id);
+            
+            if (updatedEntity != null)
+            {
+                updatedEntity.Definition = category.Definition;
+                updatedEntity.SeoUrl = category.SeoUrl;
+                this.context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
 
     }
