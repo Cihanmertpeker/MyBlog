@@ -30,6 +30,7 @@ namespace MyBlogMVC.Controllers.Admin
 
 
 
+
         public IActionResult CreateOrUpdate(int id, ViewType type)
         {
             ViewBag.Active = "Category";
@@ -98,6 +99,7 @@ namespace MyBlogMVC.Controllers.Admin
 
             return definition;
         }
+
 
 
         [HttpGet]

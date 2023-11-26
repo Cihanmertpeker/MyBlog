@@ -1,5 +1,8 @@
 ﻿@model List<MyBlogMVC.Data.Category>
+<<<<<<< HEAD
 @using  MyBlogMVC.Controllers.Admin
+=======
+>>>>>>> 7e0c231c8cadf34e8380a91353e84945da6b7354
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -8,7 +11,10 @@
 }
 
 <div class="container mt-3">
+<<<<<<< HEAD
     <a asp-action="CreateOrUpdate"asp-controller="Category" asp-area="Admin" asp-route-type="@ViewType.Create">Add new record</a>
+=======
+>>>>>>> 7e0c231c8cadf34e8380a91353e84945da6b7354
     <table class="table  table-striped">
         <thead>
             <tr>
@@ -27,8 +33,13 @@
                         <td>@category.Definition</td>
                         <td>@category.SeoUrl</td>
                         <td>
+<<<<<<< HEAD
                             <a asp-action="CreateOrUpdate" asp-controller="Category" asp-area="Admin" asp-route-id="@category.Id" asp-route-type=@ViewType.Update>Update</a>
                             <a onclick="return confirm('Silmek istediğinizden emin misiniz?')" asp-action="Remove" asp-controller="Category" asp-area="Admin" asp-route-id="@category.Id">Remove</a>
+=======
+                            <a asp-action="Update" asp-controller="Category" asp-area="Admin" asp-route-id="@category.Id">Update</a>
+                            <a>Remove</a>
+>>>>>>> 7e0c231c8cadf34e8380a91353e84945da6b7354
                         </td>
                     </tr>
                 }
