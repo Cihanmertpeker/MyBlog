@@ -1,0 +1,1 @@
+-- Pagination next ve previous yapýlacak
