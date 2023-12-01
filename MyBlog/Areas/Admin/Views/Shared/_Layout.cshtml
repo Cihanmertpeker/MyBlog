@@ -19,10 +19,10 @@
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action @(ViewBag.Active=="Category"?"active":"") p-3" asp-action="Index" asp-controller="Category" asp-area="Admin">Kategoriler</a>
                 <a class="list-group-item list-group-item-action @(ViewBag.Active=="Blog"?"active":"") p-3" asp-action="Index" asp-controller="Blog" asp-area="Admin">Bloglar</a>
-                <a class="list-group-item list-group-item-action  p-3" href="#!">Overview</a>
-                <a class="list-group-item list-group-item-action  p-3" href="#!">Events</a>
-                <a class="list-group-item list-group-item-action  p-3" href="#!">Profile</a>
-                <a class="list-group-item list-group-item-action  p-3" href="#!">Status</a>
+                <a class="list-group-item list-group-item-action @(ViewBag.Active=="Profil"?"active":"") p-3" asp-action="Update" asp-controller="Profile" asp-area="Admin">Profil</a>
+
+                <a class="list-group-item list-group-item-action  p-3" asp-action="Logout" asp-controller="Account" asp-area="">Çıkış Yap</a>
+                
             </div>
         </div>
         <!-- Page content wrapper-->
@@ -30,7 +30,7 @@
             <!-- Top navigation-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 <div class="container-fluid">
-                    <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
+                    <button class="btn btn-primary" id="sidebarToggle">Menu</button>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">

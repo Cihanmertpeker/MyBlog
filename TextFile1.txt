@@ -1,1 +1,4 @@
 -- Pagination next ve previous yapýlacak
+--searching ve kategori seçimine göre bloglarýn listelenmesi reismlerin getirilmesi
+
+--pagination yapýlmasý

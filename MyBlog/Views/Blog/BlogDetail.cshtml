@@ -1,0 +1,50 @@
+﻿@using MyBlogMVC.Data
+@using MyBlogMVC.Models;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+    var blogDetail = (Blog)ViewBag.BlogDetail;
+    var profileInfo = (MyProfile)ViewBag.ProfileModel;
+}
+
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card mb-3">
+            <img src="~/images/hero.jpg" style="max-height:250px; object-fit:cover" class="card-img-top mb-3" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@profileInfo.Title</h5>
+                <p class="card-text">@profileInfo.Summary</p>
+                <a href="@profileInfo.Contact" class="btn btn-primary">Kaynak kodlara git</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-9">
+        <div class="card mb-9">
+            <div class="row g-0">
+
+                <div class="row">
+                    <div class="card-body">
+                        <div class="row">
+                            <img src="~/images/@blogDetail.ImageUrl" height="400" width="300" />
+                        </div>
+                        <div class="row">
+                            <h5 class="card-title">@blogDetail.Title</h5>
+                            <h6 class="card-text">@blogDetail.ShortDescription</h6>
+                            <p class="card-text">@blogDetail.Description</p>
+                            <p class="card-text"><small class="text-body-secondary">Oluşturma tarihi: @blogDetail.CreatedDate.ToShortDateString() @blogDetail.CreatedDate.ToShortTimeString()</small></p>
+                            @* <button class="btn btn-primary mb-3">Anasayfaya Dön</button> *@
+                            <div class="mb-2 float-end">
+                                <a class="btn btn-primary" asp-action="Index" asp-controller="Home">Anasayfaya Dön</a>
+                            </div>
+                           @*  <a href="/Home/Index" class="btn btn-primary">Anasayfaya Dön</a> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

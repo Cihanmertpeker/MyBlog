@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBlogMVC.Data;
 
@@ -10,7 +11,7 @@ namespace MyBlogMVC.Controllers.Admin
         Update = 1,
     }
 
-
+    [Authorize]
     [Area("Admin")]
     public class CategoryController : Controller
     {

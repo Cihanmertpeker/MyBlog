@@ -1,8 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using MyBlogMVC.Data
+@using MyBlogMVC.Models;
 @{
     Layout = "_Layout";
+    var profileInfo = (ProfileUpdateModel)ViewBag.ProfileModel;
+    var allBlogs = (List<Blog>)ViewBag.AllBlogs;
 }
 <div class="row">
     <div class="col-lg-3 col-md-4">
@@ -10,20 +11,18 @@
         <div class="card mb-3">
             <img src="~/images/hero.jpg" style="max-height:250px; object-fit:cover" class="card-img-top mb-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">@profileInfo.Title</h5>
+                <p class="card-text">@profileInfo.Summary</p>
+                <a href="@profileInfo.Contact" class="btn btn-primary">Kaynak kodlara git</a>
             </div>
         </div>
 
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                The current link item
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">A second link item</a>
-            <a href="#" class="list-group-item list-group-item-action">A third link item</a>
-            <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-            <a class="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link item</a>
+        <div class="align-items-center" id="loadingCategoryScreen">
+            <strong role="status">Yükleniyor...</strong>
+            <div class="spinner-border ms-auto" aria-hidden="true"></div>
+        </div>
+
+        <div class="list-group" id="categoryScreen">
         </div>
     </div>
 
@@ -34,50 +33,29 @@
             <button class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
         </div>
 
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="..." class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+        
+            @foreach (var blog in allBlogs)
+            {
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/images/@blog.ImageUrl" height="200" width="200" />
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@blog.Title</h5>
+                            <p class="card-text">@blog.ShortDescription</p>
+                            <a href="/Blog/BlogDetail/@blog.Id" class="btn btn-primary">Devamını Oku</a>
+                            <p class="card-text"><small class="text-body-secondary">Oluşturma tarihi: @blog.CreatedDate.ToShortDateString() @blog.CreatedDate.ToShortTimeString()</small></p>
 
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="..." class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            }
+        
 
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="..." class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="float-end">
             <nav aria-label="Page navigation example text-end">
@@ -99,7 +77,53 @@
             </nav>
         </div>
 
- 
-
     </div>
 </div>
+
+@section Ajax{
+    <script>
+        $(document).ready(function () {
+            let url = '@Url.Action("GetCategories", "Home")';
+            $.ajax({
+                type: 'GET',
+                url: url,
+                beforeSend: function () {
+                    $("#categoryScreen").css("display", "none");
+                    $('#loadingCategoryScreen').css("display", "flex")
+                },
+                contentType: false,
+                cache: false,
+                success: function (response) {
+                    console.log("gelen response : ", response)
+                    $('#loadingCategoryScreen').css("display", "none");
+
+                    let html = '';
+
+                    $("#categoryScreen").css("display", "block");
+
+                    response.forEach(x => {
+                        if (x.id == 0) {
+                            html += `<a href="#" class="list-group-item list-group-item-action active">${x.definition}</a>`
+                        }
+                        else {
+                            html += `<a href="#" class="list-group-item list-group-item-action">${x.definition}</a>`
+                        }
+
+                    })
+
+                    console.log("category screen none oldu")
+
+                    $("#categoryScreen").html(html);
+                },
+                error: function (error) {
+                    console.log("gelen response : ", response)
+                    $('#loadingCategoryScreen').css("display", "none")
+                    $("#categoryScreen").css("display", "block");
+                }
+
+
+            })
+
+        });
+    </script>
+}
