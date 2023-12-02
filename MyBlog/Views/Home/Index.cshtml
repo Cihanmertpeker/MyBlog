@@ -1,9 +1,14 @@
 ﻿@using MyBlogMVC.Data
 @using MyBlogMVC.Models;
+@model List<MyBlogMVC.Data.Blog>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
     var profileInfo = (ProfileUpdateModel)ViewBag.ProfileModel;
     var allBlogs = (List<Blog>)ViewBag.AllBlogs;
+    var pageModel = (MyBlogMVC.Models.PageModel)ViewBag.PageModel;
+    var searchModel = (MyBlogMVC.Models.BlogSearchModel)ViewBag.SearchModel;
+    var categories = (List<Category>)ViewBag.Categories;
 }
 <div class="row">
     <div class="col-lg-3 col-md-4">
@@ -17,25 +22,52 @@
             </div>
         </div>
 
-        <div class="align-items-center" id="loadingCategoryScreen">
-            <strong role="status">Yükleniyor...</strong>
-            <div class="spinner-border ms-auto" aria-hidden="true"></div>
-        </div>
+        <div class="list-group">
+            @foreach (var category in categories)
+            {
 
-        <div class="list-group" id="categoryScreen">
+                <a class="list-group-item list-group-item-action" asp-action="Index" asp-controller="Home" asp-route-CategoryId="@category.Id">@category.Definition</a>
+
+
+                @* <a href="Home/Index/?categoryId=@category.Id" class="list-group-item list-group-item-action">@category.Definition</a> *@
+            }
         </div>
     </div>
 
     <div class="col-lg-9">
 
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
-            <button class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
-        </div>
+        <div class="card mb-3">
 
-        
-            @foreach (var blog in allBlogs)
-            {
+            <form asp-action="Index" asp-controller="Home" method="get">
+                <div class="row p-3">
+                    <div class="col-9">
+                        <input type="text" name="Title" value="@searchModel.Title" placeholder="Başlık" class="form-control form-control-sm " />
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-primary btn-sm w-100 float-end">Search</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        @if (searchModel != null && (!string.IsNullOrWhiteSpace(searchModel.Title)))
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Arama yaptınız !</strong>
+
+                Arama filtreler : @searchModel.Title
+
+
+
+                <a asp-action="Index" asp-controller="Home">Filtreleri Kaldır</a>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+
+        @foreach (var blog in Model)
+        {
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -52,30 +84,41 @@
                     </div>
                 </div>
             </div>
-            }
-        
+        }
+
 
 
 
         <div class="float-end">
-            <nav aria-label="Page navigation example text-end">
+            <nav aria-label="Page navigation example">
                 <ul class="pagination">
+
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
+                        @if (pageModel.ActivePage != 1)
+                        {
+                            <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-ActivePage="@(pageModel.ActivePage-1)">&laquo;</a>
+                        }
+
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                    @for (int i = 1; i <= pageModel.PageCount; i++)
+                    {
+                        <li class="page-item"><a class="page-link @(pageModel.ActivePage == i?"active":"")" asp-action="Index" asp-controller="Home" asp-route-ActivePage="@i">@i</a></li>
+                    }
+
+
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
+                        @if (pageModel.ActivePage != pageModel.PageCount)
+                        {
+                            <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-ActivePage="@(pageModel.ActivePage+1)">&raquo;</a>
+                        }
+
                     </li>
+
                 </ul>
             </nav>
         </div>
+
 
     </div>
 </div>
@@ -83,46 +126,45 @@
 @section Ajax{
     <script>
         $(document).ready(function () {
-            let url = '@Url.Action("GetCategories", "Home")';
-            $.ajax({
-                type: 'GET',
-                url: url,
-                beforeSend: function () {
-                    $("#categoryScreen").css("display", "none");
-                    $('#loadingCategoryScreen').css("display", "flex")
-                },
-                contentType: false,
-                cache: false,
-                success: function (response) {
-                    console.log("gelen response : ", response)
-                    $('#loadingCategoryScreen').css("display", "none");
+            // let url = '@Url.Action("GetCategories", "Home")';
+            // $.ajax({
+            //     type: 'GET',
+            //     url: url,
+            //     beforeSend: function () {
+            //         $("#categoryScreen").css("display", "none");
+            //         $('#loadingCategoryScreen').css("display", "flex")
+            //     },
+            //     contentType: false,
+            //     cache: false,
+            //     success: function (response) {
+            //         console.log("gelen response : ", response)
+            //         $('#loadingCategoryScreen').css("display", "none");
 
-                    let html = '';
+            //         let html = '';
 
-                    $("#categoryScreen").css("display", "block");
+            //         $("#categoryScreen").css("display", "block");
 
-                    response.forEach(x => {
-                        if (x.id == 0) {
-                            html += `<a href="#" class="list-group-item list-group-item-action active">${x.definition}</a>`
-                        }
-                        else {
-                            html += `<a href="#" class="list-group-item list-group-item-action">${x.definition}</a>`
-                        }
+            //         response.forEach(x => {
+            //             if (x.id == 0) {
+            //                 html += `<a href="#" class="list-group-item list-group-item-action active">${x.definition}</a>`
+            //             }
+            //             else {
+            //                 html += `<a href="Home/Index/?categoryId=${x.id}" class="list-group-item list-group-item-action">${x.definition}</a>`
+            //             }
 
-                    })
+            //         })
+            //         console.log("category screen none oldu")
 
-                    console.log("category screen none oldu")
-
-                    $("#categoryScreen").html(html);
-                },
-                error: function (error) {
-                    console.log("gelen response : ", response)
-                    $('#loadingCategoryScreen').css("display", "none")
-                    $("#categoryScreen").css("display", "block");
-                }
+            //         $("#categoryScreen").html(html);
+            //     },
+            //     error: function (error) {
+            //         console.log("gelen response : ", response)
+            //         $('#loadingCategoryScreen').css("display", "none")
+            //         $("#categoryScreen").css("display", "block");
+            //     }
 
 
-            })
+            // })
 
         });
     </script>

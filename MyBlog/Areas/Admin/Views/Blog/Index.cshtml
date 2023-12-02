@@ -116,9 +116,11 @@
             <ul class="pagination">
 
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
+                    @if (pageModel.ActivePage != 1)
+                    {
+                        <a class="page-link" asp-action="Index" asp-controller="Blog" asp-route-ActivePage="@(pageModel.ActivePage-1)">&laquo;</a>
+                    }
+
                 </li>
 
                 @for (int i = 1; i <= pageModel.PageCount; i++)
@@ -129,11 +131,12 @@
 
 
 
-
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
+                    @if (pageModel.ActivePage != pageModel.PageCount)
+                    {
+                        <a class="page-link" asp-action="Index" asp-controller="Blog" asp-route-ActivePage="@(pageModel.ActivePage+1)">&raquo;</a>
+                    }
+
                 </li>
             </ul>
         </nav>

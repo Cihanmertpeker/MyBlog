@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
 using MyBlogMVC.Data;
 using MyBlogMVC.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MyBlogMVC.Controllers.Admin
 {
@@ -28,7 +29,7 @@ namespace MyBlogMVC.Controllers.Admin
 
         public IActionResult Index(ProfileUpdateModel model)
         {
-
+           
 
             var profile = this.context.MyProfiles.AsNoTracking().ToList();
 
@@ -60,5 +61,8 @@ namespace MyBlogMVC.Controllers.Admin
 
             return RedirectToAction("Index","Blog");
         }
+
+
+
     }
 }
