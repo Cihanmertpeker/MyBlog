@@ -136,7 +136,7 @@ namespace MyBlogMVC.Controllers.Admin
 
             foreach (var assignCategory in model)
             {
-                var control = this.context.BlogCategories.SingleOrDefault(x => x.BlogId == assignCategory.BlogId && x.CategoryId == assignCategory.Id);
+                var control = this.context.BlogCategories.FirstOrDefault(x => x.BlogId == assignCategory.BlogId && x.CategoryId == assignCategory.Id);
                 if (assignCategory.Exist)
                 {
 
