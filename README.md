@@ -1,16 +1,14 @@
-# M&Y Yazılım Eğitim Akademi - MY Blog
-
-Bu web Sayfası proje ödevi olarak hazırlanmıştır.
+# M&Y Yazılım Eğitim Akademi - Tatil Seyahat Blogu
 
 ## Projeye Genel Bakış
 
-Proje, ASP.NET Framework, SQL Server, MVC, Bootstrap, CSS, ve HTML kullanılarak geliştirilmiş bir kişisel blog sitesini içermektedir. Ayrıca, Entity Framework Code First uygulanmıştır.
+Proje, ASP.NET Framework, SQL Server, MVC, Bootstrap, CSS, ve HTML kullanılarak geliştirilmiş bir kişisel tatil seyahat blog sitesini içermektedir. Ayrıca, Entity Framework Code First uygulanmıştır.
 
 ## Kullanılan Teknolojiler ve Uygulamalar
 
 - ASP.NET Framework
 - SQL Server
-- MVC
+- MVC 5
 - Entity Framework Code First
 - Bootstrap
 - CSS- HTML
@@ -18,18 +16,25 @@ Proje, ASP.NET Framework, SQL Server, MVC, Bootstrap, CSS, ve HTML kullanılarak
 
 ## Admin İçin Özellikler
 
-- Admin giriş paneli
-- Yeni blog veya kategori ekleme, düzenleme ve silme
-- Eklenen blogları kategorize etme
+- Kontrol paneli
+- Yeni blog ekleme, düzenleme ve silme
+- Yapılan yorumları düzenleme ve silme
 
+## Proje Teknik Özellikleri
+
+- Veritabanı: MsSql
+- Mimari: MVC
+- Tasarım Deseni: Repository Tasarım Deseni
+- Kullanıcı Arayüzü: HTML/CSS - Bootstrap
 
 ## Ekran Görüntüleri
+![Alt text](tatilseyahat-anasayfa.jpg)
 
+![Alt text](tatilseyahat-adminpanel.jpg)
 
 # İLİŞKİSEL VERİTABANI DİAGRAMI
 
-![image](https://github.com/Cihanmertpeker/MyBlog/assets/119748061/3d7e7ce0-503f-4b03-8715-387c44d4b4cd)
-
+![Alt text](tatilseyahat-diagram.jpg)
 
 
 ## Nasıl Başlanır
