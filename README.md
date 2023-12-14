@@ -30,13 +30,10 @@ Proje, ASP.NET Framework, SQL Server, MVC, Bootstrap, CSS, ve HTML kullanılarak
 ## Ekran Görüntüleri
 ![tatilseyahat-anasayfa](https://github.com/Cihanmertpeker/MyBlog/assets/119748061/f8ed6d39-0740-450c-877c-d6339848e7c9)
 
-
+![tatilseyahat-adminpanel](https://github.com/Cihanmertpeker/MyBlog/assets/119748061/8adc073b-5a90-4364-aee6-2f0b70630353)
 
 # İLİŞKİSEL VERİTABANI DİAGRAMI
 ![tatilseyahat-diagram](https://github.com/Cihanmertpeker/MyBlog/assets/119748061/7fa025a8-d62f-44d4-9ebd-4a21e95aa1f1)
-
-![tatilseyahat-adminpanel](https://github.com/Cihanmertpeker/MyBlog/assets/119748061/8adc073b-5a90-4364-aee6-2f0b70630353)
-
 
 
 ## Nasıl Başlanır
